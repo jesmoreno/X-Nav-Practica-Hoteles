@@ -14,17 +14,22 @@
  #map {width: 200px;height: 200px;float:right; margin: 0px 30px 30px 30px;}
  #list {border : solid 2px #58D3F7;padding : 4px;width : 200px;height : 300px;overflow : scroll; float:right; margin: 0px 30px 30px 30px;}
  #favs {float:left;width : 600px;height : auto;margin-left:10px; text-align: center;}
- #desc {margin-left: 50px; width: 600px; text-align: center;}
+ #desc {margin: 0 auto; width: 600px; float:left;}
 
 /**Carousel de las imagenes del banner**/
 #myCarousel .item img {width: 400px; position:relative; left:440px;}
 .carousel-control.left {background-image: linear-gradient(to right, #58D3F7 0px, transparent 100%);}
 .carousel-control.right {background-image: linear-gradient(to left, #58D3F7 0px, transparent 100%);}
-#myCarousel {margin-bottom: 30px;}
+#myCarousel {margin:auto;}
 
 /**Carousel de las imagenes de los hoteles**/
- #hotelCarousel {width: 600px;}
+ #hotelCarousel {width: 600px; margin: 0 auto;}
  #hotelCarousel .item img {width: 400px;position: relative; left: 90px;}
+
+
+/*div que contiene toda la página*/
+ #container {width: 80%
+ 			max-width: 1000px;}
 
 
 
