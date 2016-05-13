@@ -1,0 +1,31 @@
+/*Info hotel*/
+ h1,h2 {color:#58D3F7;}
+
+ /**botones tabla navegacion**/
+ .nav-pills li {margin-right:15px; margin-top:15px;}
+ button.navbar-btn {margin-right: 15px; margin-top:15px;float: right;}
+ form.navbar-left {margin-top: 15px; margin-right: 15px}
+
+ /*Fondo y logotipo barra navegacion*/
+ #logotipe {width: 200px;height: 50px;}
+ .navbar-default {background-image: linear-gradient(to bottom, #F1F8E0 0px, #58D3F7 100%); height: 70px;}
+
+/*Mapa , lista de hoteles, panel arrastrar favoritos, info hoteles*/
+ #map {width: 200px;height: 200px;float:right; margin: 0px 30px 30px 30px;}
+ #list {border : solid 2px #58D3F7;padding : 4px;width : 200px;height : 300px;overflow : scroll; float:right; margin: 0px 30px 30px 30px;}
+ #favs {float:left;width : 600px;height : auto;margin-left:10px; text-align: center;}
+ #desc {margin-left: 50px; width: 600px; text-align: center;}
+
+/**Carousel de las imagenes del banner**/
+#myCarousel .item img {width: 400px; position:relative; left:440px;}
+.carousel-control.left {background-image: linear-gradient(to right, #58D3F7 0px, transparent 100%);}
+.carousel-control.right {background-image: linear-gradient(to left, #58D3F7 0px, transparent 100%);}
+#myCarousel {margin-bottom: 30px;}
+
+/**Carousel de las imagenes de los hoteles**/
+ #hotelCarousel {width: 600px;}
+ #hotelCarousel .item img {width: 400px;position: relative; left: 90px;}
+
+
+
+
