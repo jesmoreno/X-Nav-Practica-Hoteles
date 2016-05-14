@@ -26,7 +26,7 @@ https://raw.githubusercontent.com/CursosWeb/Code/3c0f0ddaf433eee819428ba9617c59c
 
   <div id="container">
 
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     	<div class="container-fluid">
     	    <!-- Brand and toggle get grouped for better mobile display -->
     	    <div class="navbar-header">
@@ -42,9 +42,9 @@ https://raw.githubusercontent.com/CursosWeb/Code/3c0f0ddaf433eee819428ba9617c59c
     	    </div>
 
     	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          		<ul class="nav nav-pills">
-            		<li class="active" id="inicio"><a>Inicio<span class="sr-only">(current)</span></a></li>
-            		<li id="hoteles"><a>Mis hoteles</a></li>
+          		<ul class="nav navbar-nav">
+            		<li id="inicio" class="active"><a href="#home"><span class="glyphicon glyphicon-home"></span>Inicio</a></li>
+            		<li id="hoteles"><a href="#hotel"><span class="glyphicon glyphicon-cog"></span>Mis hoteles</a></li>
     				    <button type="button" class="btn btn-primary navbar-btn" id="get" state="none">Mostrar hoteles</button>
                 <!--Crear coleccion-->
                 <form class="navbar-form navbar-left" role="search">
@@ -100,8 +100,6 @@ https://raw.githubusercontent.com/CursosWeb/Code/3c0f0ddaf433eee819428ba9617c59c
     <p id="desc"></p>
 
   </div><!--div container-->
-
-
 </body>
 
 </html>

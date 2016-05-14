@@ -94,17 +94,6 @@ $(document).ready(function() {
 	//estructuras para almacenar info de colecciones
 	var myCollection = [];
 
-
-	//posible local storage para almacenar datos
-	
-	/*if(typeof(Storage) !== "undefined") {
-		alert(Storage);
-    	// Code for localStorage/sessionStorage.
-	} else {
-    	// Sorry! No Web Storage support..
-    	alert("Sorry! No Web Storage support..");
-	}*/
-
 	map = L.map('map').setView([40.4175, -3.708], 11);
 	L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 	attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
@@ -139,48 +128,43 @@ $(document).ready(function() {
 
 	});
 
-	//pulsar una de las pestañas
-	$(".nav-pills li").click(function(){
-		$(".nav-pills").find(".active").removeClass();
-		$(this).addClass("active");
-	});
-
 	//boton que este con clase active para cargar sus elementos correspondientes
-	$(".nav-pills li").click(function(){
-		//terminar
-		if($(this).hasClass("active")){
-			//alert($(this).attr('id'));
-			if($(this).attr('id')==="hoteles"){//si gestion de hoteles
+	$(".navbar-nav li").click(function(){
+		
+		$(this).addClass("active");
 
-				$("#map").hide();
-				$("#myCarousel").hide();
-				$("#desc").hide();
-				//si ya se han cargado los hoteles mostrar formulario para favoritos
-				if($("#get").attr('state')!=="none"){
-					$("form.navbar-left").show();
-				}
-				$("#favs").show();
-				
-			}else{//si es inicio
-				$("#favs").hide();
-				$("form.navbar-left").hide();
-				$("#map").show();
-				$("#myCarousel").show();
-				$("#desc").show();
+		if($(this).attr('id')==="hoteles"){//si gestion de hoteles
+			$("#inicio").removeClass("active");
+
+			$("#myCarousel").hide();
+			$("#desc").hide();
+			//si ya se han cargado los hoteles mostrar formulario para favoritos
+			if($("#get").attr('state')!=="none"){
+				$("form.navbar-left").show();
 			}
+			$("#favs").show();
+				
+		}else{//si es inicio
+			$("#hoteles").removeClass("active");
+
+			$("#favs").hide();
+			$("form.navbar-left").hide();
+			$("#map").show();
+			$("#myCarousel").show();
+			$("#desc").show();
 		}
 	});
 
 /////////////////////////////////////////////////////////////////PREGUNTAR SI SE CREA SIEMPRE/////////////////////////////////////////
 	//cerrar marca del mapa
-	$(".leaflet-popup-close-button").click(function(){
+	/*$(".leaflet-popup-close-button").click(function(){
 		$("img.leaflet-clickable ,img.leaflet-zoom-animated").remove();
 	});
 	//si pinchan en un pop up muestra la informacion del hotel
 	$(".leaflet-popup-content p").click(function(){
 		alert("info hotel al pulsar marca en mapa");
 		show_accomodation();
-	});
+	});*/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 });

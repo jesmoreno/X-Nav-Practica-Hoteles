@@ -1,35 +1,27 @@
 /*Info hotel*/
  h1,h2 {color:#58D3F7;}
 
- /**botones tabla navegacion**/
- .nav-pills li {margin-right:15px; margin-top:15px;}
- button.navbar-btn {margin-right: 15px; margin-top:15px;float: right;}
- form.navbar-left {margin-top: 15px; margin-right: 15px}
-
  /*Fondo y logotipo barra navegacion*/
- #logotipe {width: 200px;height: 50px;}
- .navbar-default {background-image: linear-gradient(to bottom, #F1F8E0 0px, #58D3F7 100%); height: 70px;}
+ #logotipe {width:65px;}
+ .navbar img {}
+ .navbar {background-image: linear-gradient(to bottom, #F1F8E0 0px, #58D3F7 100%);}
 
 /*Mapa , lista de hoteles, panel arrastrar favoritos, info hoteles*/
- #map {width: 200px;height: 200px;float:right; margin: 0px 30px 30px 30px;}
- #list {border : solid 2px #58D3F7;padding : 4px;width : 200px;height : 300px;overflow : scroll; float:right; margin: 0px 30px 30px 30px;}
- #favs {float:left;width : 600px;height : auto;margin-left:10px; text-align: center;}
- #desc {margin: 0 auto; width: 600px; float:left;}
+ #map {width: 25%;height: 200px;float:right;margin-left: 4%; margin-top:7%;}
+ #list {border : solid 2px #58D3F7;padding : 4px;width : 25%;height : 300px;overflow : scroll; float:right;margin-top:7%;}
+ #desc {margin: 0 auto; width: 50%; float:left;margin-top:7%;}
+ #favs {float:left;width : 40%; text-align: center;margin-top:7%;}
+
 
 /**Carousel de las imagenes del banner**/
-#myCarousel .item img {width: 400px; position:relative; left:440px;}
+.carousel-inner { text-align: center; }
+.carousel .item > img { display: inline-block; }
 .carousel-control.left {background-image: linear-gradient(to right, #58D3F7 0px, transparent 100%);}
 .carousel-control.right {background-image: linear-gradient(to left, #58D3F7 0px, transparent 100%);}
-#myCarousel {margin:auto;}
-
-/**Carousel de las imagenes de los hoteles**/
- #hotelCarousel {width: 600px; margin: 0 auto;}
- #hotelCarousel .item img {width: 400px;position: relative; left: 90px;}
-
+#myCarousel {margin-top:7%;}
 
 /*div que contiene toda la página*/
- #container {width: 80%
- 			max-width: 1000px;}
+ #container {width: 90%; max-width: 1100px; margin: auto;}
 
 
 
