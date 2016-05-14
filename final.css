@@ -9,7 +9,7 @@
 /*Mapa , lista de hoteles, panel arrastrar favoritos, info hoteles*/
  #map {width: 25%;height: 200px;float:right;margin-left: 4%; margin-top:7%;}
  #list {border : solid 2px #58D3F7;padding : 4px;width : 25%;height : 300px;overflow : scroll; float:right;margin-top:7%;}
- #desc {margin: 0 auto; width: 50%; float:left;margin-top:7%;}
+ #desc {margin: 0 auto; width: 40%; float:left;margin-top:7%;}
  #favs {float:left;width : 40%; text-align: center;margin-top:7%;}
 
 
@@ -22,6 +22,11 @@
 
 /*div que contiene toda la página*/
  #container {width: 90%; max-width: 1100px; margin: auto;}
+
+ @media screen and (max-width: 800px){
+ 	body {background-color: green;}
+ 	#map,#list,#desc,#favs {width: 100%}
+ }
 
 
 
