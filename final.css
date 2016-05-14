@@ -24,7 +24,6 @@
  #container {width: 90%; max-width: 1100px; margin: auto;}
 
  @media screen and (max-width: 800px){
- 	body {background-color: green;}
  	#map,#list,#desc,#favs {width: 100%}
  }
 
