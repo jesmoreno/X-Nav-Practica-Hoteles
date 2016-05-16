@@ -1,3 +1,38 @@
+/***FUNCIONES PARA CONTROLAR EL ARRASTRE A LISTA DE COLECCIONES***/
+function handleDragStart(event) {
+
+	//dragged = event.target;
+  	this.style.opacity = .5;  // this / e.target is the source node.
+  	//alert("cambio opacidad");
+};
+
+function handleDragOver(event) {
+  if (e.preventDefault) {
+    e.preventDefault(); // Necessary. Allows us to drop.
+  }
+
+
+  e.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
+
+  return false;
+};
+
+function handleDragEnter(event) {
+  // this / e.target is the current hover target.
+  //alert(e.target);
+  alert("entro");
+
+  if ( event.target.className == "nameList" ) {
+	event.target.style.background = "purple";
+  }
+};
+
+function handleDragLeave(event) {
+  this.classList.remove('over');  // this / e.target is previous target element.
+};
+
+/***************************************************************************************************/
+
 function create_carousel(obj){
 
 	var carousel = $('<div id="hotelCarousel" class="carousel slide" data-ride="carousel">'
@@ -30,6 +65,7 @@ function show_accomodation(){
 
 	//objeto que contiene la informacion
 	var accomodation = accomodations[$(this).attr('no')];
+	
 	if(accomodation.geoData.latitude){
 		var lat = accomodation.geoData.latitude;
 	}
@@ -39,18 +75,11 @@ function show_accomodation(){
 	if(accomodation.geoData.address){
 		var address = accomodation.geoData.address;
 	}
-	if(accomodation.basicData.web){
-		var url = accomodation.basicData.web;
-	}
 	if(accomodation.basicData.name){
 		var name = accomodation.basicData.name;
 	}
 	if(accomodation.basicData.body){
 		var desc = accomodation.basicData.body;
-	}
-
-	if(accomodation.extradata.categorias.categoria.item[1]['#text']){
-		var cat = accomodation.extradata.categorias.categoria.item[1]['#text'];
 	}
 	if(accomodation.extradata.categorias.categoria.subcategorias.subcategoria.item[1]['#text']){
 		var subcat = accomodation.extradata.categorias.categoria.subcategorias.subcategoria.item[1]['#text'];
@@ -66,7 +95,6 @@ function show_accomodation(){
 	if(accomodation.multimedia.media[0].url){
 		var img = create_carousel(accomodation);
 	}
-
 };
 
 function get_accomodations(){
@@ -79,7 +107,7 @@ function get_accomodations(){
 
 		var list = '';
 		for (var i = 0; i < accomodations.length; i++) {
-	 		list = list + '<li no=' + i + '>' + accomodations[i].basicData.title + '</li>';
+	 		list = list + '<li no="' + i + '" draggable=true>' + accomodations[i].basicData.title + '</li>';
 	 	}
 	 	//creo el nodo y lo añado
 	 	var div = $("<div id='list'>"+list+"</div>");
@@ -93,6 +121,8 @@ $(document).ready(function() {
 
 	//estructuras para almacenar info de colecciones
 	var myCollection = [];
+
+	//alert(screen.width + " x " + screen.height); 
 
 	map = L.map('map').setView([40.4175, -3.708], 11);
 	L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -112,7 +142,7 @@ $(document).ready(function() {
 		titleFavs.appendTo("#favs");
 
 		//si estoy en la pestaña inicio quito la zona para guardar hotel en coleccion
-		if($("#inicio").attr('class') === "active"){
+		if($("#home").attr('class') === "active"){
 			$("#favs").hide();
 		}
 	});
@@ -123,18 +153,37 @@ $(document).ready(function() {
 	//cojo información que se mete en el formulario y añado lista
 	$("button.btn-default").click(function(){
 		var collectionTitle = $("input.form-control").val();
+		$("input.form-control").val("");
 		var newCollection = {name : collectionTitle};
-		$("#favs").append($("<p>"+collectionTitle+"</p>"));
+		$("#favs").append($('<p class="nameList" draggable=true>'+collectionTitle+'</p>'));
 
+	/*********************************************arrastre a coleccion*********************************************************************************/
+		
+		if($('#favs').find('p').length === 1){
+			//alert($("#favs p").html());
+
+			var elements = document.querySelectorAll('#list li , #favs p');
+			//alert(elements.length);
+
+			[].forEach.call(elements, function(item) {
+	  			item.addEventListener('dragstart', handleDragStart, false);
+	  			item.addEventListener('dragenter', handleDragEnter, false);
+	 	 		item.addEventListener('dragover', handleDragOver, false);
+	  			item.addEventListener('dragleave', handleDragLeave, false);
+			});
+		}
 	});
 
 	//boton que este con clase active para cargar sus elementos correspondientes
 	$(".navbar-nav li").click(function(){
-		
-		$(this).addClass("active");
 
-		if($(this).attr('id')==="hoteles"){//si gestion de hoteles
-			$("#inicio").removeClass("active");
+		//si el boton pulsado no es el de cargar los alojados
+		if($(this).attr('id')!=="housed"){
+			$('ul').find('li.active').removeClass("active");
+			$(this).addClass("active");
+		}
+		
+		if($(this).attr('id')==="management"){//si gestion de hoteles
 
 			$("#myCarousel").hide();
 			$("#desc").hide();
@@ -143,18 +192,28 @@ $(document).ready(function() {
 				$("form.navbar-left").show();
 			}
 			$("#favs").show();
+			$("#map").show();
+			$("#finalList").show();
 				
-		}else{//si es inicio
-			$("#hoteles").removeClass("active");
+		}else if($(this).attr('id')==="home"){//si es inicio
 
 			$("#favs").hide();
 			$("form.navbar-left").hide();
 			$("#map").show();
 			$("#myCarousel").show();
 			$("#desc").show();
+			$("#finalList").show();
+
+		}else if($(this).attr('id')==="collection"){
+
+			$("#favs").hide();
+			$("form.navbar-left").hide();
+			$("#map").hide();
+			$("#myCarousel").hide();
+			$("#desc").show();
+			$("#finalList").hide();
 		}
 	});
-
 /////////////////////////////////////////////////////////////////PREGUNTAR SI SE CREA SIEMPRE/////////////////////////////////////////
 	//cerrar marca del mapa
 	/*$(".leaflet-popup-close-button").click(function(){
