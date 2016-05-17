@@ -1,5 +1,5 @@
 /*Info hotel*/
- h1,h2 {color:#58D3F7;}
+ h2 {color:#58D3F7;}
 
  /*Fondo y logotipo barra navegacion*/
  #logotipe {width:65px;}
@@ -7,9 +7,9 @@
 
 /*Mapa , lista de hoteles, panel arrastrar favoritos, info hoteles*/
  #map {width: 25%;height: 200px;float:right;margin-left: 4%; margin-top:7%;}
- #list {border : solid 2px #58D3F7;padding : 4px;width : 25%;height : 300px;overflow : scroll; float:right;margin-top:7%;}
+ #finalList {border : solid 2px #58D3F7;padding : 4px;width : 25%;height : 300px;overflow : scroll; float:right;margin-top:7%;}
  #desc {margin: 0 auto; width: 40%; float:left;margin-top:7%;}
- #favs {float:left;width : 40%; text-align: center;margin-top:7%;}
+ #favs {float:left;width : 40%; margin-top:7%;}
  
 /**Carousel de las imagenes del banner**/
 .carousel-inner { text-align: center; }
@@ -23,22 +23,16 @@
 
 
 /**efecto de arrastre*/
-[draggable] {
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
-  /* Required to make elements draggable in old WebKit */
-  -khtml-user-drag: element;
-  -webkit-user-drag: element;
-}
-#list li{cursor: move; background-color: #58D3F7;margin-bottom:4px;}
-/*#favs p{border : solid 2px #58D3F7; }*/
-.over {background-color: green;}
-#favs p {border: 2px dashed #000;}
+#finalList p{cursor: move; background-color: #58D3F7;margin-bottom:4px;height: 19%;border:solid 2px #0000FF;
+			padding: 5%;text-align: center;
+			border-radius: 15px;}
+/*#favs div{border: 2px dashed #000; text-align: center;margin: 7px;}*/
 
+/*elementos en la lista de hoteles seleccionada*/
+#favs h1{background-color: #58D3F7;border:solid 2px #0000FF; color:black;text-align: center;}
+#favs p {text-align: center;}
 
 /**Para terminales de pantalla menor**/
  @media screen and (max-width: 800px){
- 	#map,#list,#desc,#favs {width: 80%; float: left; margin-left:0px; }
+ 	#map,#finalList,#desc,#favs {width: 80%; float: left; margin-left:0px; }
  }
