@@ -20,8 +20,7 @@
 #myCarousel {margin-top:7%;}
 
 /*div que contiene toda la página*/
- #container {width: 90%; max-width: 1100px; margin: auto;}
-
+#container {width: 90%; max-width: 1100px; margin: auto;}
 
 /**efecto de arrastre*/
 #finalList p{cursor: move; background-color: #58D3F7;margin-bottom:4px;height: 19%;border:solid 2px #0000FF;
@@ -34,10 +33,11 @@
 #favs p {text-align: center;}
 
 /**Para terminales de pantalla menor**/
- @media screen and (max-width: 800px){
+@media screen and (max-width: 800px){
  	#map,#finalList,#desc,#favs,#formJson {width: 80%; float: left; margin-left:0px;}
     #myCarousel,#map,#formJson {margin-top:15%;}
- }
+    .carousel .item > img { display: inline-block; width: 70%;}
+}
 
 
 /*************************************CSS PARA EL FORMULARIO JSON***********************************************************************************/
