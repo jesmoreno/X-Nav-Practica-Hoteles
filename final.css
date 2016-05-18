@@ -8,8 +8,9 @@
 /*Mapa , lista de hoteles, panel arrastrar favoritos, info hoteles*/
  #map {width: 25%;height: 200px;float:right;margin-left: 4%; margin-top:7%;}
  #finalList {border : solid 2px #58D3F7;padding : 4px;width : 25%;height : 300px;overflow : scroll; float:right;margin-top:7%;}
- #desc {margin: 0 auto; width: 40%; float:left;margin-top:7%;}
+ #desc {width: 40%; float:left;margin-top:7%;margin-bottom:2%;}
  #favs {float:left;width : 40%; margin-top:7%;}
+ #form {float: right;}
  
 /**Carousel de las imagenes del banner**/
 .carousel-inner { text-align: center; }
@@ -34,5 +35,105 @@
 
 /**Para terminales de pantalla menor**/
  @media screen and (max-width: 800px){
- 	#map,#finalList,#desc,#favs {width: 80%; float: left; margin-left:0px; }
+ 	#map,#finalList,#desc,#favs,#formJson {width: 80%; float: left; margin-left:0px; }
  }
+
+
+/*************************************CSS PARA EL FORMULARIO JSON***********************************************************************************/
+body {font: 14px/21px "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;}
+.myForm h2, .myForm label {font-family:Georgia, Times, "Times New Roman", serif;}
+.form_hint, .required_notification {font-size: 11px;color:red;}
+
+.myForm{width: 90%;}
+
+.required_notification {
+    margin:5px 0 0 0;
+    display:inline;
+    float:right;
+}
+
+.myForm ul {
+    width:80%;
+    list-style-type:none;
+    list-style-position:outside;
+    margin:0px;
+    padding:0px;
+}
+.myForm li{
+    padding:12px;
+    border-bottom:1px solid #eee;
+    position:relative;
+}
+
+/*borde superior e inferior*/
+.myForm li:first-child, .myForm li:last-child {
+    border-bottom:1px solid #777;
+}
+
+.myForm h2 {
+    margin:0;
+    display: inline;
+}
+
+
+.myForm label {
+    width:150px;
+    margin-top: 3px;
+    display:inline-block;
+    float:left;
+    padding:3px;
+}
+.myForm input {
+    height:20%;
+    width:40%;
+    padding:5px 8px;
+}
+
+/* Button Style */
+button.submit {
+    background-color: #58D3F7;
+    background: -webkit-gradient(linear, left top, left bottom, from(#58D3F7), to(#2E2EFE));
+    background: -webkit-linear-gradient(top, #58D3F7, #2E2EFE);
+    background: -moz-linear-gradient(top, #58D3F7, #2E2EFE);
+    background: -ms-linear-gradient(top, #58D3F7, #2E2EFE);
+    background: -o-linear-gradient(top, #58D3F7, #2E2EFE);
+    background: linear-gradient(top, #58D3F7, #2E2EFE);
+    border: 1px solid #58D3F7;
+    border-bottom: 1px solid #2E2EFE;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    color: white;
+    font-weight: bold;
+    padding: 6px 20px;
+    text-align: center;
+    text-shadow: 0 -1px 0 #396715;
+}
+
+button.submit:hover {
+    opacity:.85;
+    cursor: pointer;
+}
+button.submit:active {
+    border: 1px solid #20911e;
+    box-shadow: 0 0 10px 5px #356b0b inset;
+    -webkit-box-shadow:0 0 10px 5px #356b0b inset ;
+    -moz-box-shadow: 0 0 10px 5px #356b0b inset;
+    -ms-box-shadow: 0 0 10px 5px #356b0b inset;
+    -o-box-shadow: 0 0 10px 5px #356b0b inset;
+     
+}
+
+.myForm input{
+    border:1px solid #aaa;
+    box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;
+    border-radius:2px;
+}
+.myForm input:focus{
+    background: #fff;
+    border:1px solid #555;
+    box-shadow: 0 0 3px #aaa;
+    width: 42%;
+}

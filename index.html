@@ -12,7 +12,6 @@ https://raw.githubusercontent.com/CursosWeb/Code/3c0f0ddaf433eee819428ba9617c59c
   <link href="http://cdn.leafletjs.com/leaflet-0.7.4/leaflet.css" rel="stylesheet">
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
   <script src="http://cdn.leafletjs.com/leaflet-0.7.4/leaflet.js"></script>
-  <link rel="stylesheet" href="/resources/demos/style.css">
 
   <script type="text/javascript" src="final.js"></script>
   <!--bootstrap-->
@@ -52,13 +51,13 @@ https://raw.githubusercontent.com/CursosWeb/Code/3c0f0ddaf433eee819428ba9617c59c
                 <li id="management"><a href="#management"><span class="glyphicon glyphicon-cog"></span> Gestión</a></li>
             		<li id="collection"><a href="#collection"><span class="glyphicon glyphicon-header"></span> Mis hoteles</a></li>
                 <li id="housed" class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-pencil"></span> Google+<span class="caret"></span></a>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-pencil"></span> Github<span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                    <li><a href="#">Save</a></li>
-                    <li><a href="#">Load</a></li>
+                    <li id="save"><a href="#"><span class="glyphicon glyphicon-upload"></span> Save</a></li>
+                    <li id="load"><a href="#"><span class="glyphicon glyphicon-download"></span> Load</a></li>
                   </ul>
                 </li>
-    				    <button type="button" class="btn btn-primary navbar-btn" id="get" state="none"><span class="glyphicon glyphicon-download-alt"></span> Descargar</button>
+    				    <li id="download"><button type="button" class="btn btn-primary navbar-btn" id="get" state="none"><span class="glyphicon glyphicon-download-alt"></span> Descargar</button></li>
                 <!--Crear coleccion-->
                 <form class="navbar-form navbar-left" role="search">
                   <div class="form-group">
@@ -103,6 +102,8 @@ https://raw.githubusercontent.com/CursosWeb/Code/3c0f0ddaf433eee819428ba9617c59c
       	</a>
     </div>
 
+    <!--mapa para hoteles-->
+    <div id="formJson"></div>
     <!--mapa para hoteles-->
     <div id="map"></div>
     <!--contiene la lista de hoteles-->

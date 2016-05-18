@@ -26,28 +26,51 @@ function create_carousel(obj){
 	}
 };
 
-/*function(){
+function info_map(data){
+	//data[0] = selector; data[1]= lat ; data[2] = long; data[3] = nombre hotel
+	var marker = L.marker([data[1], data[2]]);
 
-};*/
+	marker.addTo(map);
+	marker.bindPopup('<p '+'no='+data[0]+'>'+data[3] +'</p>',{closeOnClick: true}).openPopup();
+	//si pinchan en la marca muestro info hotel
+	marker.on('click',function(e){
+		var num = this.getPopup().getContent().split("=")[1].split(">")[0];
+		show_accomodation(accomodations,num);
+	});
+
+	//cerrar marca
+	marker.on('dblclick',function(e){
+		this.closePopup();
+		this.setOpacity(0);
+	});
+
+	map.setView([data[1], data[2]], 15);
+};
 
 
 
-function show_accomodation(){
+show_accomodation = function (elements,selector){
 
 	//objeto que contiene la informacion
-	var accomodation = accomodations[$(this).attr('no')];
-	
+	var accomodation = elements[selector];
+	var data = [];
+
+	data.push(selector);
+
 	if(accomodation.geoData.latitude){
 		var lat = accomodation.geoData.latitude;
+		data.push(lat);
 	}
 	if(accomodation.geoData.longitude){
 		var lon = accomodation.geoData.longitude;
+		data.push(lon);
 	}
 	if(accomodation.geoData.address){
 		var address = accomodation.geoData.address;
 	}
 	if(accomodation.basicData.name){
 		var name = accomodation.basicData.name;
+		data.push(name);
 	}
 	if(accomodation.basicData.body){
 		var desc = accomodation.basicData.body;
@@ -56,39 +79,15 @@ function show_accomodation(){
 		var subcat = accomodation.extradata.categorias.categoria.subcategorias.subcategoria.item[1]['#text'];
 	}
 
-	//marcador de localizacion en el mapa con nombre
-	var marker = L.marker([lat, lon]);
-
-	marker.addTo(map).bindPopup('<p '+'no='+$(this).attr('no')+'>'+name +'</p>',closeOnClick = false).openPopup();
-
-	marker.on('click',function(e){
-		alert(this.getPopup().getContent());
-		show_accomodation();
-
-
-
-
-		//this.setOpacity(0);
-		//alert("cierro pestaña");
-
-	});
-
-
-	//cuando pincho sobre la marca muestro información de esta localizacion
-	/*marker.on('remove',function(e){
-		//this.setOpacity(0);
-		alert("elimino");
-	});*/
-
-	map.setView([lat, lon], 15);
 	//añado información del hotel seleccionado al html
 	$('#desc').html('<h2>' + name + '</h2>'+ '<p><strong>Dirección: </strong>'+address+'. <strong>Valoración: </strong>' + subcat + '</p>'+ desc);
-	
 
 	//para el carousel de fotos
 	if(accomodation.multimedia.media[0].url){
 		create_carousel(accomodation);
 	}
+
+	return data;
 };
 
 function get_accomodations(){
@@ -109,7 +108,11 @@ function get_accomodations(){
 			$("#finalList").append(p);
 	 	}
 
-	 	$('#finalList p').click(show_accomodation);
+	 	$('#finalList p').click(function(){
+
+	 		var markData = show_accomodation(accomodations,[$(this).attr('no')]);
+	 		info_map(markData);
+	 	});
 
 		//muestro la caja de hoteles
 		$("#finalList").show();
@@ -123,11 +126,26 @@ $(document).ready(function() {
 	var myCollection = [];
 	//alert(screen.width + " x " + screen.height); 
 
+
+/////////////////////////////CREAR MAPA INICIAL/////////////////////////////////////////////////////////////////////////////////////////
 	map = L.map('map').setView([40.4175, -3.708], 11);
 	L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 	attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
 	maxZoom: 13
 	}).addTo(map);
+
+/////////////////////////////BOTON PARA CARGAR JSON/////////////////////////////////////////////////////////////////////////////////////////
+	$("#get").click(function(){
+		get_accomodations();
+		//boton de cargar json pulsado
+		$("#get").attr('state','clicked');
+		//si estoy en Mis hoteles
+		if($("#collection").attr('class')==='active'){
+			$("#finalList").hide();
+			alert("quito lista de hoteles");
+		}
+
+	});
 
 	//nada mas empezar no muestro la caja de hoteles ni la lista de favoritos
 	$("#finalList").hide();
@@ -136,14 +154,40 @@ $(document).ready(function() {
 	$("form.navbar-left").hide();
 
 
-	//boton cargar json
-	$("#get").click(function(){
-		get_accomodations();
-		//boton de cargar json pulsado
-		$("#get").attr('state','clicked');
+/////////////////////////////BOTONES PARA CARGAR LISTA DE FAVS Y SUBIRLA/////////////////////////////////////////////////////////////////////////////////////////
+	$("ul.dropdown-menu li").click(function(){
+		//16133830a10601b0465900ef179454262860d5e1 GITHUB API
+		if($(this).attr('id')=== "save"){
+			var form = '<form class="myForm" action="" method="post" name="contact_form">'+
+      		'<ul><li><h2>Form</h2><span class="required_notification">* Denotes Required Field</span>'+
+        	'</li><li><label for="name">Token Github:</label><input type="text" id="token" placeholder="" required/>'+
+          	'<span class="form_hint">*</span></li>'+
+			'<li><label for="email">Repository name:</label><input type="text" id="repository" placeholder="" required/>'+
+         	'<span class="form_hint">*</span></li>'+
+			'<li><label for="website">File name:</label><input type="text" id="file" placeholder="" required/>'+
+          	'<span class="form_hint">*</span></li>'+
+        	'<li><button class="submit" type="button">Submit Form</button></li></ul></form>';
+
+        	$("#formJson").append(form);
+
+        	//cuando pinchen en enviar lo subo y cierro el div
+        	$("button.submit").click(function(){
+        		
+        		var token = $("input#token").val();
+        		var repName = $("input#repository").val();
+        		var fileName = $("input#file").val();
+
+        		//alert(token+" "+repName+" "+fileName);
+        		$("form.myForm").remove();
+        	});
+
+		}else{
+			//cuando cargue
+			console.log("cargo json");
+		}
 	});
 
-	//cojo información que se mete en el formulario y añado lista
+/////////////////////////////BOTON FORMULARIO CREAR LISTAS DE HOTELES/////////////////////////////////////////////////////////////////////////////////////////
 	$("button.btn-default").click(function(){
 		if($("input.form-control").val() !== ""){
 			var collectionTitle = $("input.form-control").val();
@@ -154,7 +198,7 @@ $(document).ready(function() {
 		
 		$('#favs div').last().droppable({
 			drop: function( event, ui ) {
-				//alert($(this).html());
+				//$(this).html();
 				$("<p></p>").text(ui.draggable.text()).appendTo(this);
 			},
 			over: function( event, ui ) {
@@ -183,11 +227,11 @@ $(document).ready(function() {
 
 	});
 
-	//boton que este con clase active para cargar sus elementos correspondientes
+/////////////////////////////PESTAÑAS APLICACION/////////////////////////////////////////////////////////////////////////////////////////
 	$(".navbar-nav li").click(function(){
 
 		//si el boton pulsado no es el de cargar los alojados
-		if($(this).attr('id')!=="housed"){
+		if($(this).attr('id')!=="housed" && $(this).attr('id')!=="download"){
 			$('ul').find('li.active').removeClass("active");
 			$(this).addClass("active");
 		}
@@ -232,12 +276,4 @@ $(document).ready(function() {
 			}
 		}
 	});
-/////////////////////////////////////////////////////////////////PREGUNTAR SI SE CREA SIEMPRE/////////////////////////////////////////
-	//si pinchan en un pop up muestra la informacion del hotel
-	/*$(".leaflet-popup-content p").click(function(){
-		alert("info hotel al pulsar marca en mapa");
-		show_accomodation();
-	});*/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 });
