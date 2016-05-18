@@ -7,7 +7,7 @@
 
 /*Mapa , lista de hoteles, panel arrastrar favoritos, info hoteles*/
  #map {width: 25%;height: 200px;float:right;margin-left: 4%; margin-top:7%;}
- #finalList {border : solid 2px #58D3F7;padding : 4px;width : 25%;height : 300px;overflow : scroll; float:right;margin-top:7%;}
+ #finalList {border : solid 2px #58D3F7;padding : 4px;width : 25%;height : 300px;overflow : scroll; float:right;margin-top:7%;-webkit-overflow-scrolling: touch;}
  #desc {width: 40%; float:left;margin-top:7%;margin-bottom:2%;}
  #favs {float:left;width : 40%; margin-top:7%;}
  #form {float: right;}
@@ -35,7 +35,8 @@
 
 /**Para terminales de pantalla menor**/
  @media screen and (max-width: 800px){
- 	#map,#finalList,#desc,#favs,#formJson {width: 80%; float: left; margin-left:0px; }
+ 	#map,#finalList,#desc,#favs,#formJson {width: 80%; float: left; margin-left:0px;}
+    #myCarousel,#map,#formJson {margin-top:15%;}
  }
 
 
