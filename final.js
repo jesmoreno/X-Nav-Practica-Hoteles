@@ -108,14 +108,23 @@ function get_accomodations(){
 		//genero lista de hoteles
 		for (var i = 0; i < accomodations.length; i++) {
 			var p = document.createElement("p");
-			p.setAttribute('no', i);
-			var content = document.createTextNode(accomodations[i].basicData.title);
-			p.appendChild(content);
+			var li = document.createElement("li");
 
+
+			var content1 = document.createTextNode(accomodations[i].basicData.title);
+			var content2 = document.createTextNode(accomodations[i].basicData.title);
+
+			//para pestaña de gestion
+			p.setAttribute('no', i);
+			p.appendChild(content1);
 			$("#finalList").append(p);
+			//para pestaña principal
+			li.setAttribute('no', i);
+			li.appendChild(content2);
+			$("#listHome ul").append(li);
 	 	}
 
-	 	$('#finalList p').click(function(){
+	 	$('#listHome li').click(function(){
 
 	 		var markData = show_accomodation(accomodations,[$(this).attr('no')]);
 	 		info_map(markData);
@@ -128,15 +137,14 @@ function get_accomodations(){
 
 writeRepository = function(myToken,reponame,file) {
     var token = myToken;
-    console.log (token);
+    //console.log (token);
 
     github = new Github({token: token,auth: "oauth"});
-    myrepo = github.getRepo("jesmoreno", reponame);
+    myrepo = github.getRepo('jesmoreno', reponame);
 
-    console.log(myrepo);
-    console.log (token+" "+reponame +" "+file);
+    //console.log (token+" "+reponame +" "+file);
 
-    myrepo.write('master', 'README.md', 
+    myrepo.writeFile('gh-pages', file, 
 		 new Date().toLocaleString(),
 		 "Create file", function(err) {
 		     console.log (err);
@@ -184,6 +192,7 @@ $(document).ready(function() {
 		if($("#collection").attr('class')==='active'){
 			//alert("alojados");
 			$("#finalList").hide();
+			$("#listHome").hide();
 			$("#googleForm").show();
 		}
 
@@ -195,12 +204,14 @@ $(document).ready(function() {
 
 		if($("#home").attr('class')==='active'){
 			//alert("inicio");
-			$("#finalList").show();
+			$("#listHome").show();
+			$("#finalList").hide();
 		}
 
 	});
 
 	//nada mas empezar no muestro la caja de hoteles ni la lista de favoritos
+	$("#listHome").hide();
 	$("#finalList").hide();
 	$("#favs").hide();
 	$("#googleForm").hide();
@@ -326,17 +337,16 @@ $(document).ready(function() {
 			$("#googleForm").hide();
 			$("#myCarousel").hide();
 			$("#desc").hide();
-			//si ya se han cargado los hoteles mostrar formulario para favoritos
-			if($("#get").attr('state')!=="none"){
-				$("form.navbar-left").show();
-			}
-			$("#map").show();
 
-			if($("#get").attr('state') === "clicked"){
-				//alert();
+			$("#map").show();
+			//si ya se han cargado los hoteles mostrar formulario para favoritos
+			if($("#get").attr('state') ==="clicked"){
+				$("form.navbar-left").show();
 				$("#finalList").show();
+				$("#listHome").hide();
 				$("#favs").show();
 			}
+			
 			
 				
 		}else if($(this).attr('id')==="home"){//si es inicio
@@ -344,12 +354,14 @@ $(document).ready(function() {
 			$("#googleForm").hide();
 			$("#favs").hide();
 			$("form.navbar-left").hide();
+
 			$("#map").show();
 			$("#myCarousel").show();
 			$("#desc").show();
 
 			if($("#get").attr('state') === "clicked"){
-				$("#finalList").show();
+				$("#finalList").hide();
+				$("#listHome").show();
 			}
 
 		}else if($(this).attr('id')==="collection"){
@@ -358,9 +370,12 @@ $(document).ready(function() {
 			$("form.navbar-left").hide();
 			$("#map").hide();
 			$("#myCarousel").hide();
+
 			$("#desc").show();
+			
 			if($("#get").attr('state') === "clicked"){
 				//alert("quito lista hoteles");
+				$("#listHome").hide();
 				$("#googleForm").show();
 				$("#finalList").hide();
 			}

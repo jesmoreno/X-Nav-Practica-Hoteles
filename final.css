@@ -6,11 +6,11 @@
  .navbar {background-image: linear-gradient(to bottom, #F1F8E0 0px, #58D3F7 100%);}
 
 /*Mapa , lista de hoteles, panel arrastrar favoritos, info hoteles*/
- #map {width: 25%;height: 200px;float:right;margin-left: 4%; margin-top:7%;}
- #finalList {border : solid 2px #58D3F7;padding : 4px;width : 25%;height : 300px;overflow : scroll; float:right;margin-top:7%;-webkit-overflow-scrolling: touch;}
- #desc {width: 40%; float:left;margin-top:7%;margin-bottom:2%;}
- #favs {float:left;width : 40%; margin-top:7%;}
- #formJson {margin-top:7%;}
+ #map {width: 25%;height: 200px;float:right;margin-left: 4%; margin-top:5%;}
+ #finalList, #listHome {border : solid 2px #58D3F7;padding : 4px;width : 25%;height : 300px;overflow : scroll; float:right;margin-top:5%;-webkit-overflow-scrolling: touch;}
+ #desc {width: 40%; float:left;margin-top:5%;margin-bottom:2%;}
+ #favs {float:left;width : 40%; margin-top:5%;}
+ #formJson {margin-top:5%;}
  
 /**Carousel de las imagenes del banner**/
 .carousel-inner { text-align: center; }
@@ -26,7 +26,12 @@
 #finalList p{cursor: move; background-color: #58D3F7;margin-bottom:4px;height: 19%;border:solid 2px #0000FF;
 			padding: 5%;text-align: center;
 			border-radius: 15px;}
-/*#favs div{border: 2px dashed #000; text-align: center;margin: 7px;}*/
+
+/*********LISTA DE HOTELES MENU PRINCIPAL******/
+#listHome li{cursor: pointer; margin-bottom:4px;height: 19%;padding: 5%;border-bottom: 1px solid black;}
+#listHome li:hover {background-color: #58D3F7;}
+#listHome ul {list-style-type: square;}
+#listHome {background-color: #3399ff;}
 
 /*elementos en la lista de hoteles seleccionada*/
 #favs h1{background-color: #58D3F7;border:solid 2px #0000FF; color:black;text-align: center;}
@@ -144,7 +149,7 @@ button.submit:active {
 
 /**Para terminales de pantalla menor**/
 @media screen and (max-width: 800px){
- 	#map,#finalList,#desc,#favs,#formJson,#googleForm {width: 80%; float: left; margin-left:0px;}
+ 	#map,#finalList,#listHome,#desc,#favs,#formJson,#googleForm {width: 80%; float: left; margin-left:0px;}
     #myCarousel,#map,#formJson {margin-top:15%;}
     .carousel .item > img { display: inline-block; width: 70%;}
     #googleForm .myForm {width: 100%;}
