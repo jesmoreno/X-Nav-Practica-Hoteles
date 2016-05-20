@@ -1,3 +1,8 @@
+//variables para github
+var github;
+var myrepo;
+
+
 function create_carousel(obj){
 
 	var carousel = $('<div id="hotelCarousel" class="carousel slide" data-ride="carousel">'
@@ -92,6 +97,8 @@ show_accomodation = function (elements,selector){
 
 function get_accomodations(){
 	var url = "https://raw.githubusercontent.com/CursosWeb/Code/3c0f0ddaf433eee819428ba9617c59c74081fa11/JS-APIs/misc/alojamientos/alojamientos.json";
+
+
 	$.getJSON(url, function(data) {
 
 		//quito el boton de cargar el json
@@ -114,17 +121,51 @@ function get_accomodations(){
 	 		info_map(markData);
 	 	});
 
-		//muestro la caja de hoteles
-		$("#finalList").show();
-
 	});
 };
 
+///////////////////////////////////////////////////////FUNCIONES PARA SUBIR A GITHUB Y DESCARGAR/////////////////////////////////////////
+
+writeRepository = function(myToken,reponame,file) {
+    var token = myToken;
+    console.log (token);
+
+    github = new Github({token: token,auth: "oauth"});
+    myrepo = github.getRepo("jesmoreno", reponame);
+
+    console.log(myrepo);
+    console.log (token+" "+reponame +" "+file);
+
+    myrepo.write('master', 'README.md', 
+		 new Date().toLocaleString(),
+		 "Create file", function(err) {
+		     console.log (err);
+		 });
+
+};
+/////////////////////////////////////////////////////CUANDO EL DOM ESTA LISTO////////////////////////////////////////////////////////////
 $(document).ready(function() {
 
-	//estructuras para almacenar info de colecciones
-	var myCollection = [];
+	//estructura para almacenar info de colecciones
+	myCollection = {};
+	myCollection.lists = [];
+	myCollection.housed = [];
+
 	//alert(screen.width + " x " + screen.height); 
+
+
+
+////////////////////////////////////////////////FORMULARIO ID GOOGLE +//////////////////////////////////////////////////////////////////
+
+
+	$('#googleForm button').click(function(){
+		//alert("formulario google");
+		var id = $('#idGoogle').val();
+		alert(id);
+		//consigo el nombre en google plus
+		
+	});
+
 
 
 /////////////////////////////CREAR MAPA INICIAL/////////////////////////////////////////////////////////////////////////////////////////
@@ -141,8 +182,20 @@ $(document).ready(function() {
 		$("#get").attr('state','clicked');
 		//si estoy en Mis hoteles
 		if($("#collection").attr('class')==='active'){
+			//alert("alojados");
 			$("#finalList").hide();
-			alert("quito lista de hoteles");
+			$("#googleForm").show();
+		}
+
+		if($("#management").attr('class')==='active'){
+			//alert("gestion");
+			$("form.navbar-left").show();
+			$("#finalList").show();
+		}
+
+		if($("#home").attr('class')==='active'){
+			//alert("inicio");
+			$("#finalList").show();
 		}
 
 	});
@@ -150,21 +203,22 @@ $(document).ready(function() {
 	//nada mas empezar no muestro la caja de hoteles ni la lista de favoritos
 	$("#finalList").hide();
 	$("#favs").hide();
+	$("#googleForm").hide();
 	//escondo formulario para crear coleccion
 	$("form.navbar-left").hide();
 
 
 /////////////////////////////BOTONES PARA CARGAR LISTA DE FAVS Y SUBIRLA/////////////////////////////////////////////////////////////////////////////////////////
 	$("ul.dropdown-menu li").click(function(){
-		//16133830a10601b0465900ef179454262860d5e1 GITHUB API
+
 		if($(this).attr('id')=== "save"){
 			var form = '<form class="myForm" action="" method="post" name="contact_form">'+
       		'<ul><li><h2>Form</h2><span class="required_notification">* Denotes Required Field</span>'+
         	'</li><li><label for="name">Token Github:</label><input type="text" id="token" placeholder="" required/>'+
           	'<span class="form_hint">*</span></li>'+
-			'<li><label for="email">Repository name:</label><input type="text" id="repository" placeholder="" required/>'+
+			'<li><label for="email">Repository name:</label><input type="text" id="repository" placeholder="X-Nav-Practica-Hoteles" required/>'+
          	'<span class="form_hint">*</span></li>'+
-			'<li><label for="website">File name:</label><input type="text" id="file" placeholder="" required/>'+
+			'<li><label for="website">File name:</label><input type="text" id="file" placeholder="fileName.json" required/>'+
           	'<span class="form_hint">*</span></li>'+
         	'<li><button class="submit" type="button">Submit Form</button></li></ul></form>';
 
@@ -177,7 +231,31 @@ $(document).ready(function() {
         		var repName = $("input#repository").val();
         		var fileName = $("input#file").val();
 
+        		if($("div.ui-droppable").length>0){//si ha contenido en lista favoritos
+        			//alert("hay lista que guardar");
+
+	        		$("div.ui-droppable").each(function(index){
+	        			//console.log(index+": "+$(this).find('h1').text());
+	        			var favList = {};
+	        			favList.name = $(this).find('h1').text();
+	        			favList.hotels = [];
+	        			$(this).find('p').each(function(index){
+	        				//console.log($(this).text());
+	        				favList.hotels.push($(this).text());
+	        			});
+	        			//inserto
+	        			myCollection.lists.push(favList);
+	        		});
+
+
+	        		//paso la coleccion de elementos a json
+	        		var dataFile = JSON.stringify(myCollection);
+	        		console.log(dataFile);
+	        	}
+	        	//alert("no hay listas");
+
         		//alert(token+" "+repName+" "+fileName);
+        		//writeRepository(token,repName,fileName);
         		$("form.myForm").remove();
         	});
 
@@ -189,23 +267,28 @@ $(document).ready(function() {
 
 /////////////////////////////BOTON FORMULARIO CREAR LISTAS DE HOTELES/////////////////////////////////////////////////////////////////////////////////////////
 	$("button.btn-default").click(function(){
+
+		$("#favs").show();
+
 		if($("input.form-control").val() !== ""){
 			var collectionTitle = $("input.form-control").val();
 			$("input.form-control").val("");
 			var newCollection = {name : collectionTitle};
 			$("#favs").append($('<div><h1>'+collectionTitle+'</h1></div>'));
-		}
 		
 		$('#favs div').last().droppable({
 			drop: function( event, ui ) {
 				//$(this).html();
 				$("<p></p>").text(ui.draggable.text()).appendTo(this);
+				//alert($(this).find('h1').html());
+				//alert($(this).find('h1').html());
 			},
 			over: function( event, ui ) {
 				this.style.opacity = '0.4';
 			},
 			deactivate: function( event, ui ) {
 				this.style.opacity = '1';
+
 				$(this).find("p").hide();
 				$(this).click(function(){
 					//cierro las demas pestañas
@@ -218,6 +301,8 @@ $(document).ready(function() {
 				this.style.opacity = '1';
 			}
 		});
+
+	}
 
 		//hago arrastrables los elementos de la lista
 		if($("#favs").find('h1').length === 1){//solo lo hago la primera vez que hay una lista
@@ -238,6 +323,7 @@ $(document).ready(function() {
 		
 		if($(this).attr('id')==="management"){//si gestion de hoteles
 
+			$("#googleForm").hide();
 			$("#myCarousel").hide();
 			$("#desc").hide();
 			//si ya se han cargado los hoteles mostrar formulario para favoritos
@@ -247,6 +333,7 @@ $(document).ready(function() {
 			$("#map").show();
 
 			if($("#get").attr('state') === "clicked"){
+				//alert();
 				$("#finalList").show();
 				$("#favs").show();
 			}
@@ -254,6 +341,7 @@ $(document).ready(function() {
 				
 		}else if($(this).attr('id')==="home"){//si es inicio
 
+			$("#googleForm").hide();
 			$("#favs").hide();
 			$("form.navbar-left").hide();
 			$("#map").show();
@@ -272,6 +360,8 @@ $(document).ready(function() {
 			$("#myCarousel").hide();
 			$("#desc").show();
 			if($("#get").attr('state') === "clicked"){
+				//alert("quito lista hoteles");
+				$("#googleForm").show();
 				$("#finalList").hide();
 			}
 		}

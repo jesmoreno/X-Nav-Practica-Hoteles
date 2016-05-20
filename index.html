@@ -23,6 +23,7 @@ https://raw.githubusercontent.com/CursosWeb/Code/3c0f0ddaf433eee819428ba9617c59c
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
   <script src="jquery.ui.touch-punch.min.js"></script>
+  <script src="github.js"></script>
 
   <link href="final.css" rel="stylesheet">
 </head>
@@ -50,9 +51,9 @@ https://raw.githubusercontent.com/CursosWeb/Code/3c0f0ddaf433eee819428ba9617c59c
           		<ul class="nav navbar-nav">
             		<li id="home" class="active"><a href="#home"><span class="glyphicon glyphicon-home"></span> Inicio</a></li>
                 <li id="management"><a href="#management"><span class="glyphicon glyphicon-cog"></span> Gestión</a></li>
-            		<li id="collection"><a href="#collection"><span class="glyphicon glyphicon-header"></span> Mis hoteles</a></li>
+            		<li id="collection"><a href="#collection"><span class="glyphicon glyphicon-user"></span> Alojados</a></li>
                 <li id="housed" class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-pencil"></span> Github<span class="caret"></span></a>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-floppy-saved"></span> Github<span class="caret"></span></a>
                   <ul class="dropdown-menu">
                     <li id="save"><a href="#"><span class="glyphicon glyphicon-upload"></span> Save</a></li>
                     <li id="load"><a href="#"><span class="glyphicon glyphicon-download"></span> Load</a></li>
@@ -115,6 +116,22 @@ https://raw.githubusercontent.com/CursosWeb/Code/3c0f0ddaf433eee819428ba9617c59c
     <p id="desc"></p>
     <!--info en pestaña principal cuando pulso una coleccion-->
     <div id="collectionSelected"></div>
+
+    <div id="googleForm">
+      <form class="myForm" action="" method="post" name="contact_form">
+        <ul>
+          <li>
+            <h2>Add Google+ ID</h2>
+          </li>
+          <li>
+            <label for="name">Id Google+:</label><input type="text" id="idGoogle" placeholder="" required/>
+          </li>
+          <li>
+            <button class="submit" type="button">Add</button>
+          </li>
+        </ul>
+      </form>
+    </div>
 
   </div><!--div container-->
 </body>

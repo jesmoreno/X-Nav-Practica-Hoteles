@@ -10,7 +10,7 @@
  #finalList {border : solid 2px #58D3F7;padding : 4px;width : 25%;height : 300px;overflow : scroll; float:right;margin-top:7%;-webkit-overflow-scrolling: touch;}
  #desc {width: 40%; float:left;margin-top:7%;margin-bottom:2%;}
  #favs {float:left;width : 40%; margin-top:7%;}
- #form {float: right;}
+ #formJson {margin-top:7%;}
  
 /**Carousel de las imagenes del banner**/
 .carousel-inner { text-align: center; }
@@ -32,12 +32,8 @@
 #favs h1{background-color: #58D3F7;border:solid 2px #0000FF; color:black;text-align: center;}
 #favs p {text-align: center;}
 
-/**Para terminales de pantalla menor**/
-@media screen and (max-width: 800px){
- 	#map,#finalList,#desc,#favs,#formJson {width: 80%; float: left; margin-left:0px;}
-    #myCarousel,#map,#formJson {margin-top:15%;}
-    .carousel .item > img { display: inline-block; width: 70%;}
-}
+
+
 
 
 /*************************************CSS PARA EL FORMULARIO JSON***********************************************************************************/
@@ -137,4 +133,20 @@ button.submit:active {
     border:1px solid #555;
     box-shadow: 0 0 3px #aaa;
     width: 42%;
+}
+/*FORMULARIO GOOGLE PLUS*/
+#googleForm .myForm{
+    float:left;
+    width: 40%;
+    margin:7% 0 0 5%;
+}
+
+
+/**Para terminales de pantalla menor**/
+@media screen and (max-width: 800px){
+ 	#map,#finalList,#desc,#favs,#formJson,#googleForm {width: 80%; float: left; margin-left:0px;}
+    #myCarousel,#map,#formJson {margin-top:15%;}
+    .carousel .item > img { display: inline-block; width: 70%;}
+    #googleForm .myForm {width: 100%;}
+    .myForm input{width: 100%;}
 }
