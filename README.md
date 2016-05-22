@@ -14,6 +14,6 @@ Descripción optativa:
     1. He utilizado propiedades css3 y html5 para dar aspecto a la barra de scroll en la lista de hoteles, bordes redondeados de las cajas, aspecto del formulario.
     2.Totalmente operativo en móviles, incluida biblioteca para permitir arrastrar los elementos a las listas en pantallas táctiles (con autoscroll).
 
-URL obligatorio:
+URL obligatorio:  https://youtu.be/6BOm850TxFk
 
-URL opcional:
+URL opcional:    https://youtu.be/0MWlJte27a4
