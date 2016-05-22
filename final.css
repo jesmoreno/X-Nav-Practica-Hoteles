@@ -1,17 +1,21 @@
 /*Info hotel*/
  h2 {color:#58D3F7;}
-
+ #housedPeople h1{color:#0000FF;}
+ 
  /*Fondo y logotipo barra navegacion*/
  #logotipe {width:65px;}
  .navbar {background-image: linear-gradient(to bottom, #F1F8E0 0px, #58D3F7 100%);}
 
 /*Mapa , lista de hoteles, panel arrastrar favoritos, info hoteles*/
- #map {width: 25%;height: 200px;float:right;margin-left: 4%; margin-top:5%;}
- #finalList, #listHome {border : solid 2px #58D3F7;padding : 4px;width : 25%;height : 300px;overflow : scroll; float:right;margin-top:5%;-webkit-overflow-scrolling: touch;}
- #desc {width: 40%; float:left;margin-top:5%;margin-bottom:2%;}
+ #map {width: 25%;height: 200px;float:right;margin-left: 4%; margin-top:5%;margin-bottom: 4%;}
+ #finalList, #listHome {border : solid 2px #58D3F7;padding : 4px;width : 25%;height : 300px;overflow-y : scroll; float:right;margin: 5% 0 4% 0;-webkit-overflow-scrolling: touch;}
+ #desc {width: 40%; float:left;margin-top:5%;margin-bottom:4%;}
  #favs {float:left;width : 40%; margin-top:5%;}
  #formJson {margin-top:5%;}
- 
+ #housedPeople {float: left;border: 2px solid #0000FF;margin: 5% 0 0 7%;background-color: #58D3F7;}
+ #collectionSelected {width: 30%;float:right;border: solid 2px #0000FF;text-align: center;margin: 0 4% 0 0; background-color: #58D3F7;}
+
+
 /**Carousel de las imagenes del banner**/
 .carousel-inner { text-align: center; }
 .carousel .item > img { display: inline-block; width: 40%;}
@@ -146,12 +150,43 @@ button.submit:active {
     margin:7% 0 0 5%;
 }
 
+/************************SCROLLBAR************************************************************************************************/
+::-webkit-scrollbar{
+  width: 10px;
+  background: #dbe8ec;
+}
+::-webkit-scrollbar-button{
+  width:8px;
+  height: 5px;
+}
+::-webkit-scrollbar-track{
+  background:#3c454e;
+  border:thin solid #1a1f25;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb{
+  background: -webkit-linear-gradient(top, #5aafb0, #4ca06d);
+  -webkit-box-shadow:   inset 0 1px 0 rgba(255,255,225,.5),
+                inset 1px 0 0 rgba(255,255,255,.4),
+                inset 0 1px 2px rgba(255,255,255,.3);
+ 
+  border:thin solid #232c34;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover{
+    background: -webkit-linear-gradient(top, #4ca06d, #5aafb0);
+}
+
 
 /**Para terminales de pantalla menor**/
 @media screen and (max-width: 800px){
- 	#map,#finalList,#listHome,#desc,#favs,#formJson,#googleForm {width: 80%; float: left; margin-left:0px;}
+ 	#map,#finalList,#listHome,#desc,#favs,#formJson,#googleForm,#collectionSelected {width: 80%; float: left; margin-left:0px;}
     #myCarousel,#map,#formJson {margin-top:15%;}
     .carousel .item > img { display: inline-block; width: 70%;}
     #googleForm .myForm {width: 100%;}
     .myForm input{width: 100%;}
+    #formJson h2{margin-bottom: 20px;}
 }

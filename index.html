@@ -26,6 +26,8 @@ https://raw.githubusercontent.com/CursosWeb/Code/3c0f0ddaf433eee819428ba9617c59c
 
   <script src="http://npmcdn.com/github-api/dist/GitHub.min.js"></script>
 
+  <script src="https://apis.google.com/js/client.js"></script>
+
   <link href="final.css" rel="stylesheet">
 </head>
 
@@ -51,9 +53,9 @@ https://raw.githubusercontent.com/CursosWeb/Code/3c0f0ddaf433eee819428ba9617c59c
     	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           		<ul class="nav navbar-nav">
             		<li id="home" class="active"><a href="#home"><span class="glyphicon glyphicon-home"></span> Inicio</a></li>
-                <li id="management"><a href="#management"><span class="glyphicon glyphicon-cog"></span> Gestión</a></li>
-            		<li id="collection"><a href="#collection"><span class="glyphicon glyphicon-user"></span> Alojados</a></li>
-                <li id="housed" class="dropdown">
+                <li id="collection"><a href="#management"><span class="glyphicon glyphicon-cog"></span> Gestión</a></li>
+            		<li id="housed"><a href="#housed"><span class="glyphicon glyphicon-user"></span> Alojados</a></li>
+                <li id="menu" class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-floppy-saved"></span> Github<span class="caret"></span></a>
                   <ul class="dropdown-menu">
                     <li id="save"><a href="#"><span class="glyphicon glyphicon-upload"></span> Save</a></li>
@@ -111,21 +113,12 @@ https://raw.githubusercontent.com/CursosWeb/Code/3c0f0ddaf433eee819428ba9617c59c
     <div id="map"></div>
     <!--contiene la lista de hoteles para moverlas en favoritos-->
     <div id="finalList"></div>
-
-
-    <!--contiene la lista de hoteles para pestaña principal EN PROCESOOOOOOOOO-->
+    <!--contiene la lista de hoteles para pestaña principal-->
     <div id="listHome"><ul></ul></div>
-
-
-
     <!--lista de favoritos-->
     <div id="favs"></div>
     <!--info de los hoteles cuando pulso uno-->
     <p id="desc"></p>
-
-
-    <!--info en pestaña principal cuando pulso una coleccion      HACEEEEEEEEEEEEEEEEEEEEEEEEEEER-->
-    <div id="collectionSelected"></div>
 
     <div id="googleForm">
       <form class="myForm" action="" method="post" name="contact_form">
@@ -142,6 +135,11 @@ https://raw.githubusercontent.com/CursosWeb/Code/3c0f0ddaf433eee819428ba9617c59c
         </ul>
       </form>
     </div>
+    <!---Lista de alojados-->
+    <div id="housedPeople"></div>
+
+    <!--info en pestaña principal cuando pulso una coleccion-->
+    <div id="collectionSelected"></div>
 
   </div><!--div container-->
 </body>

@@ -41,6 +41,10 @@ function info_map(data){
 	marker.on('click',function(e){
 		var num = this.getPopup().getContent().split("=")[1].split(">")[0];
 		show_accomodation(accomodations,num);
+
+		if($("#collection").attr('class')==='active'){
+			$("#desc").hide();
+		}
 	});
 
 	//cerrar marca
@@ -92,6 +96,13 @@ show_accomodation = function (elements,selector){
 		create_carousel(accomodation);
 	}
 
+	$("#desc").show();
+
+	if($("#desc").attr('showed') !== 'true'){
+		$("#desc").attr('showed','true');
+
+	}
+
 	return data;
 };
 
@@ -128,6 +139,42 @@ function get_accomodations(){
 
 	 		var markData = show_accomodation(accomodations,[$(this).attr('no')]);
 	 		info_map(markData);
+
+
+	 		//miro la informacion de alojados para mostrarla (si hay alguno para ese hotel)
+	 		var hotelName = $("#desc").find('h2').html();
+	 		var position;
+	 		var apiKey = 'AIzaSyBu3RpbHtQvU9s-JQVwRnCwfuYG--ve6fI';
+
+	 		for(var i=0;i<myCollection.housed.length;i++){
+	 			if(myCollection.housed[i].hotelName === hotelName){
+	 				position = i;
+	 				break;
+	 			}
+	 		}
+
+	 		//tengo el hotel en la coleccion
+	 		if(position !== undefined){
+	 			$("#housedPeople").empty();
+	 			$("<h1>Lista de alojados</h1>").appendTo($("#housedPeople"));
+	 			//miro si tiene alojados para mostrarlo
+	 			if(myCollection.housed[position].idHoused.length>0){//si contiene algun alojado
+	 				
+	 				
+	 				for(var k =0;k<myCollection.housed[position].idHoused.length;k++){
+	 					var id = myCollection.housed[position].idHoused[k];
+	 					handleClientLoad(apiKey,id);
+
+	 				}
+	 				$("#housedPeople").show();
+	 			}
+
+	 		}else{//no hay ese hotel en la coleccion por tanto no hay alojados
+	 			//alert("no esta el hotel en la coleccion");
+	 			$("#housedPeople").empty();
+	 			$("<h1>Lista de alojados</h1>").appendTo($("#housedPeople"));
+	 			$("#housedPeople").hide();
+	 		}
 	 	});
 
 	});
@@ -151,6 +198,44 @@ writeRepository = function(myToken,reponame,file) {
 		 });
 
 };
+
+/////////////////////////////////////////////////////FUNCIONES PARA GOOGLE+/////////////////////////////////////////////////////////////
+
+handleClientLoad = function(apiKey,id) {
+
+        gapi.client.setApiKey(apiKey);
+        
+        makeApiCall(id);
+        //console.log(window.person);
+};
+
+
+makeApiCall = function(id) {
+
+        gapi.client.load('plus', 'v1', function() {
+
+        	var request = gapi.client.plus.people.get({'userId': id});
+
+          	request.execute(function(resp) {
+
+          		person = resp.displayName;
+          		img = resp.image.url;
+
+            	var heading = document.createElement('h4');
+            	var image = document.createElement('img');
+            	image.src = resp.image.url;
+            	heading.appendChild(image);
+            	heading.appendChild(document.createTextNode("  "+resp.displayName));
+
+            	document.getElementById('housedPeople').appendChild(heading);
+
+          	});
+
+        });
+
+};
+
+
 /////////////////////////////////////////////////////CUANDO EL DOM ESTA LISTO////////////////////////////////////////////////////////////
 $(document).ready(function() {
 
@@ -162,16 +247,73 @@ $(document).ready(function() {
 	//alert(screen.width + " x " + screen.height); 
 
 
-
 ////////////////////////////////////////////////FORMULARIO ID GOOGLE +//////////////////////////////////////////////////////////////////
 
 
 	$('#googleForm button').click(function(){
-		//alert("formulario google");
+
 		var id = $('#idGoogle').val();
-		alert(id);
 		//consigo el nombre en google plus
+		var apiKey = 'AIzaSyBu3RpbHtQvU9s-JQVwRnCwfuYG--ve6fI';
+
+		//vacio input formulario
+		$("#idGoogle").val('');
+
+
+		//hName---> nombre hotel    pos---->variable para saber si está ya el hotel y mirar alojados
+		var hName = $("#desc").find('h2').html();
+		var pos;
+
+		//si el hotel que muestra la info coincide con uno ya en la lista
+		for(var i=0;i<myCollection.housed.length;i++){
+			if(myCollection.housed[i].hotelName === hName){
+				pos = i;
+				break;
+			} 
+		}
+
+
+		var obj = new Object();
+		var idExist = false;
+
+		if(pos === undefined){//no existe el hotel asi que añado toda la info
+			//alert("no esta este hotel");
+
+			obj.hotelName = hName;
+			obj.idHoused = [];
+			obj.idHoused.push(id);
+			//inserto objeto en coleccion principal
+			myCollection.housed.push(obj);
+
+			handleClientLoad(apiKey,id);
+
+		}else{//si coincide el nombre de hotel miro si tiene ya el id
+			//alert("esta este hotel");
+
+			for(var j=0;j<myCollection.housed[pos].idHoused.length;j++){
+				if(myCollection.housed[pos].idHoused[j] === id){
+					//funcion autoejecutable si ya esta el id informo y no añado
+					//alert("no añado id");
+					$("#idGoogle").val('id ya existente');
+					idExist = true;
+					break;
+				}
+			}
+
+			//no coincide el id y añado al hotel correspondiente
+			if(!idExist){
+				//alert("añado id");
+				myCollection.housed[pos].idHoused.push(id);
+				handleClientLoad(apiKey,id);
+			}
+			
+		}
+
 		
+
+		$("#housedPeople").attr("showed","true");
+		$("#housedPeople").show();
+
 	});
 
 
@@ -189,14 +331,13 @@ $(document).ready(function() {
 		//boton de cargar json pulsado
 		$("#get").attr('state','clicked');
 		//si estoy en Mis hoteles
-		if($("#collection").attr('class')==='active'){
+		if($("#housed").attr('class')==='active'){
 			//alert("alojados");
 			$("#finalList").hide();
 			$("#listHome").hide();
-			$("#googleForm").show();
 		}
 
-		if($("#management").attr('class')==='active'){
+		if($("#collection").attr('class')==='active'){
 			//alert("gestion");
 			$("form.navbar-left").show();
 			$("#finalList").show();
@@ -210,13 +351,15 @@ $(document).ready(function() {
 
 	});
 
-	//nada mas empezar no muestro la caja de hoteles ni la lista de favoritos
+	//nada mas empezar no muestro:
 	$("#listHome").hide();
 	$("#finalList").hide();
 	$("#favs").hide();
 	$("#googleForm").hide();
-	//escondo formulario para crear coleccion
+	$("#desc").hide();
 	$("form.navbar-left").hide();
+	$("#housedPeople").hide();
+	$("#collectionSelected").hide();
 
 
 /////////////////////////////BOTONES PARA CARGAR LISTA DE FAVS Y SUBIRLA/////////////////////////////////////////////////////////////////////////////////////////
@@ -286,6 +429,24 @@ $(document).ready(function() {
 			$("input.form-control").val("");
 			var newCollection = {name : collectionTitle};
 			$("#favs").append($('<div><h1>'+collectionTitle+'</h1></div>'));
+
+			//cuando lo clickea meto su contenido en el home
+			$("#favs div").last().click(function(){
+				//alert($(this).find('p').length);
+				$("#collectionSelected").attr('show','true');
+
+				//alert($("#collectionSelected").attr('show'));
+
+				$("#collectionSelected").empty();
+
+				$("#collectionSelected").append("<h1>"+$(this).find('h1').html()+"</h1>")
+
+				$(this).find('p').each(function(){
+					$("#collectionSelected").append('<p>'+$(this).html()+'</p>');
+				});
+			});
+
+
 		
 		$('#favs div').last().droppable({
 			drop: function( event, ui ) {
@@ -327,16 +488,18 @@ $(document).ready(function() {
 	$(".navbar-nav li").click(function(){
 
 		//si el boton pulsado no es el de cargar los alojados
-		if($(this).attr('id')!=="housed" && $(this).attr('id')!=="download"){
+		if($(this).attr('id')!=="menu" && $(this).attr('id')!=="download"){
 			$('ul').find('li.active').removeClass("active");
 			$(this).addClass("active");
 		}
 		
-		if($(this).attr('id')==="management"){//si gestion de hoteles
+		if($(this).attr('id')==="collection"){//si gestion de hoteles
 
 			$("#googleForm").hide();
 			$("#myCarousel").hide();
 			$("#desc").hide();
+			$("#housedPeople").hide();
+			$("#collectionSelected").hide();
 
 			$("#map").show();
 			//si ya se han cargado los hoteles mostrar formulario para favoritos
@@ -354,30 +517,52 @@ $(document).ready(function() {
 			$("#googleForm").hide();
 			$("#favs").hide();
 			$("form.navbar-left").hide();
+			$("#housedPeople").hide();
 
 			$("#map").show();
 			$("#myCarousel").show();
-			$("#desc").show();
 
 			if($("#get").attr('state') === "clicked"){
+				$("#desc").show();
 				$("#finalList").hide();
 				$("#listHome").show();
+
 			}
 
-		}else if($(this).attr('id')==="collection"){
+			if($("#collectionSelected").attr('show')==='true'){
+
+				//alert("muestro coleccion pinchada");
+				if($("#collectionSelected").find('p').length>0){
+					//alert($("#collectionSelected").find('p').length);
+					$("#collectionSelected").show();
+				}
+				
+			}
+
+			//si he pinchado una lista muestro sus hoteles
+
+		}else if($(this).attr('id')==="housed"){
 
 			$("#favs").hide();
 			$("form.navbar-left").hide();
 			$("#map").hide();
 			$("#myCarousel").hide();
-
-			$("#desc").show();
+			$("#collectionSelected").hide();
 			
 			if($("#get").attr('state') === "clicked"){
 				//alert("quito lista hoteles");
 				$("#listHome").hide();
-				$("#googleForm").show();
 				$("#finalList").hide();
+				$("#desc").show();
+
+				if($("#desc").attr('showed')==='true'){
+					$("#googleForm").show();
+				}
+
+				//mostrar lista de alojados si se ha descargado el archivo y tiene un elemento
+				if($("#housedPeople").attr("showed")==="true"){
+					$("#housedPeople").show();
+				}
 			}
 		}
 	});
